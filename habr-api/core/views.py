@@ -10,6 +10,7 @@ class IndexView(TemplateView):
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
         Parser().parse()
+        Saver().save_post_data()
         return self.render_to_response(context)
 
 

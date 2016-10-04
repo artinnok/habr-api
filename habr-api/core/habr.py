@@ -11,12 +11,15 @@ MIN_PAGE = 1
 MAX_PAGE = 20
 
 SELECTOR_MAP = {
+    # post
     'date': {'name': 'span', 'class_': 'post__time_published'},
     'title': {'name': 'a', 'class_': 'post__title_link'},
-    'author': {'name': 'a', 'class_': 'post-author__link'},
     'post': {'name': 'a', 'class_': 'post__title_link'},
+
+    # author
+    'author': {'name': 'a', 'class_': 'post-author__link'},
     'karma': {'name': 'div', 'class_': 'voting-wjt__counter-score'},
-    'rating': {'name': 'div', 'class_': 'statistic__value_magenta'}
+    'rating': {'name': 'div', 'class_': 'statistic__value_magenta'},
 }
 
 
@@ -52,16 +55,26 @@ class Saver:
                                                         author=author)
         return post, author
 
+    def get_soup(self, url):
+        page = requests.get(url)
+        soup = BeautifulSoup(page.text, 'html.parser')
+        return soup
+
     def save_author_data(self):
-        def prepare_data(self, soup, selector):
+        def prepare_data(soup, selector):
             data = soup.find(**SELECTOR_MAP[selector])
             data = data.text.replace(',', '.').replace('–', '-')
             return data
         for author in Author.objects.all():
-            page = requests.get(author.url)
-            soup = BeautifulSoup(page.text, 'html.parser')
+            soup = self.get_soup(author.url)
             karma = prepare_data(soup, 'karma')
             rating = prepare_data(soup, 'rating')
             author.karma = karma
             author.rating = rating
             author.save()
+
+    def save_post_data(self):
+        for post in Post.objects.all():
+            soup = self.get_soup(post.url)
+            title = soup.find(**SELECTOR_MAP['title'])
+            print(title.next_sibling)
