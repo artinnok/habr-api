@@ -16,7 +16,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'imagekit',
     'django_extensions',
     'core.apps.CoreConfig'
 ]
@@ -74,7 +73,7 @@ USE_L10N = True
 USE_TZ = True
 
 # static
-STATICFILES_DIRS = [BASE_DIR.child("static").child("build")]
+STATICFILES_DIRS = [BASE_DIR.child("static")]
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR.child("collect_static")
 
