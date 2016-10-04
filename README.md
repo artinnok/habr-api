@@ -1,1 +1,1 @@
-# habr-api
+# habr-api by Artem Innokentiev

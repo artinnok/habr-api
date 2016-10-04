@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+        <meta charset="utf-8">
+        <title>
+            {% block title %}{% endblock %}
+        </title>
+    </head>
+    <body class="body">
+        {% include 'core/header.html' %}
+        <main class="main">
+            {% block main %}
+            {% endblock %}
+        </main>
+        {% include 'core/footer.html' %}
+    </body>
+    <script src="{% static 'js/main.js' %}"></script>
+</html>
