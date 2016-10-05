@@ -20,7 +20,7 @@ class Author(cm.Common):
         verbose_name_plural = 'авторы'
 
     def __str__(self):
-        return self.url
+        return self.link
 
 
 class Post(bh.Titleable, bh.Textable, cm.Common):
@@ -30,11 +30,6 @@ class Post(bh.Titleable, bh.Textable, cm.Common):
     link = models.URLField(
         verbose_name='Ссылка',
         unique=True
-    )
-    date = models.CharField(
-        verbose_name='Дата',
-        max_length=100,
-        blank=True
     )
     author = models.ForeignKey(
         'core.Author',
