@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
 
-from core.habr import Parser, Saver
+from core.habr import parse
 
 
 class IndexView(TemplateView):
@@ -9,8 +9,7 @@ class IndexView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
-        Parser().parse()
-        Saver().save_post_data()
+        parse()
         return self.render_to_response(context)
 
 
