@@ -38,7 +38,10 @@ def parse_title(soup):
 
 
 def parse_text(soup):
-    return soup.find(**SELECTOR_MAP['text'])
+    text = soup.find(**SELECTOR_MAP['text'])
+    text = list(text.stripped_strings)
+    text = ''.join(text)
+    return text
 
 
 def get_soup(url):
