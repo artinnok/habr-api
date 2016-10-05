@@ -10,7 +10,7 @@ class Author(cm.Common):
     """
     Сущность автора поста, может сделать много постов
     """
-    url = models.URLField(
+    link = models.URLField(
         verbose_name='Ссылка',
         unique=True
     )
@@ -27,7 +27,7 @@ class Post(bh.Titleable, bh.Textable, cm.Common):
     """
     Сущность поста с хабра
     """
-    url = models.URLField(
+    link = models.URLField(
         verbose_name='Ссылка',
         unique=True
     )

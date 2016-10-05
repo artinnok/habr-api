@@ -54,14 +54,16 @@ def parse():
         soup = BeautifulSoup(page.text, 'html.parser')
         links = [foo['href'] for foo in soup.find_all(**SELECTOR_MAP['url'])]
         dates = [foo.text for foo in soup.find_all(**SELECTOR_MAP['date'])]
-        for url, date in zip(links, dates):
-            if not is_parsed(url) and is_today(date):
-                post = requests.get(url)
+        for link, date in zip(links, dates):
+            if not is_parsed(link) and is_today(date):
+                post = requests.get(link)
                 post_soup = BeautifulSoup(post.text, 'html.parser')
+
                 title = parse_title(post_soup)
                 text = soup.find(**SELECTOR_MAP['text'])
                 author = parse_author(post_soup)
+
                 author, created = Author.objects.get_or_create(
-                    url=HABR_URL + author)
-                post = Post.objects.create(url=url, author=author,
+                    link=HABR_URL + author)
+                post = Post.objects.create(link=link, author=author,
                                            title=title, date=date)
