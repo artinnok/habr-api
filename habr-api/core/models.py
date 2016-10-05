@@ -1,4 +1,4 @@
-from datetime import date
+from math import log10
 
 from django.db import models
 
@@ -42,6 +42,27 @@ class Post(bh.Titleable, bh.Textable, cm.Common):
     class Meta:
         verbose_name = 'пост'
         verbose_name_plural = 'посты'
+
+    @classmethod
+    def get_tf(cls, word):
+        text = cls.text.split(' ')
+        length = len(text)
+        count = text.count(word)
+        tf = count / length
+        return tf
+
+    @classmethod
+    def get_idf(cls, word):
+        all_count = Post.objects.count()
+        count = Post.objects.filter(text__icontains=word).count()
+        idf = log10(all_count / count)
+        return idf
+
+    @classmethod
+    def get_tf_idf(cls, word):
+        tf = cls.get_tf(word)
+        idf = cls.get_idf(word)
+        return tf * idf
 
     def __str__(self):
         return self.title
