@@ -37,6 +37,16 @@ def parse_title(soup):
     return title.find_next_sibling().text
 
 
+def parse_text(soup):
+    return soup.find(**SELECTOR_MAP['text'])
+
+
+def get_soup(url):
+    page = requests.get(url)
+    soup = BeautifulSoup(page.text, 'html.parser')
+    return soup
+
+
 def is_today(date):
     if re.search('сегодня', date):
         return True
@@ -50,20 +60,19 @@ def is_parsed(url):
 @shared_task(name='parse')
 def parse():
     for item in range(MIN_PAGE, MAX_PAGE):
-        page = requests.get(PAGE_URL.format(item))
-        soup = BeautifulSoup(page.text, 'html.parser')
+        soup = get_soup(PAGE_URL.format(item))
+
         links = [foo['href'] for foo in soup.find_all(**SELECTOR_MAP['url'])]
         dates = [foo.text for foo in soup.find_all(**SELECTOR_MAP['date'])]
         for link, date in zip(links, dates):
             if not is_parsed(link) and is_today(date):
-                post = requests.get(link)
-                post_soup = BeautifulSoup(post.text, 'html.parser')
+                post_soup = get_soup(link)
 
                 title = parse_title(post_soup)
-                text = soup.find(**SELECTOR_MAP['text'])
+                text = parse_text(post_soup)
                 author = parse_author(post_soup)
 
                 author, created = Author.objects.get_or_create(
                     link=HABR_URL + author)
-                post = Post.objects.create(link=link, author=author,
-                                           title=title)
+                Post.objects.create(link=link, author=author, title=title,
+                                    text=text)
