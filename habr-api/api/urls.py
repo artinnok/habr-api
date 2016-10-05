@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from api.views import AuthorList, PostList, AuthorDetail
+from api.views import AuthorList, AuthorDetail, idf
 
 
 urlpatterns = [
@@ -14,4 +14,9 @@ urlpatterns = [
         view=AuthorDetail.as_view(),
         name='author_detail'
     ),
+    url(
+        regex=r'^idf/$',
+        view=idf,
+        name='idf'
+    )
 ]
