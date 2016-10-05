@@ -38,7 +38,7 @@ def parse_title(soup):
 
 
 def is_today(date):
-    if re.search('вчера', date):
+    if re.search('сегодня', date):
         return True
     return False
 
@@ -66,4 +66,4 @@ def parse():
                 author, created = Author.objects.get_or_create(
                     link=HABR_URL + author)
                 post = Post.objects.create(link=link, author=author,
-                                           title=title, date=date)
+                                           title=title)

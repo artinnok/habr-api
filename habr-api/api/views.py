@@ -1,3 +1,5 @@
+from datetime import date
+
 from rest_framework import generics
 
 from api.serializers import PostSerializer, AuthorSerializer, AuthorPostSerializer
@@ -10,9 +12,9 @@ class PostList(generics.RetrieveAPIView):
 
 class AuthorDetail(generics.RetrieveAPIView):
     serializer_class = AuthorPostSerializer
-    queryset = Author.objects.all()
+    queryset = Author.objects.filter(post_list__created__date=date.today())
 
 
 class AuthorList(generics.ListAPIView):
     serializer_class = AuthorSerializer
-    queryset = Author.objects.all()
+    queryset = Author.objects.filter(post_list__created__date=date.today())
