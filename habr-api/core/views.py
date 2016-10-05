@@ -1,16 +1,14 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
 
-from core.habr import parse
+from core.tasks import parse
 
 
 class IndexView(TemplateView):
     template_name = 'core/index.html'
 
-    def get(self, request, *args, **kwargs):
-        context = self.get_context_data(**kwargs)
-        parse()
-        return self.render_to_response(context)
+    def post(self, request, *args, **kwargs):
+        parse.delay()
 
 
 def error404(request):

@@ -4,4 +4,8 @@
 {% endblock %}
 
 {% block main %}
+<form action="{% url 'index' %}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="START">
+</form>
 {% endblock %}

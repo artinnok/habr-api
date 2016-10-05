@@ -1,7 +1,8 @@
 import re
 
-from bs4 import BeautifulSoup
 import requests
+from bs4 import BeautifulSoup
+from celery import shared_task
 
 from core.models import Post, Author
 
@@ -37,7 +38,7 @@ def parse_title(soup):
 
 
 def is_today(date):
-    if re.search('сегодня', date):
+    if re.search('вчера', date):
         return True
     return False
 
@@ -46,6 +47,7 @@ def is_parsed(url):
     return Post.objects.filter(url=url).exists()
 
 
+@shared_task(name='parse')
 def parse():
     for item in range(MIN_PAGE, MAX_PAGE):
         page = requests.get(PAGE_URL.format(item))
