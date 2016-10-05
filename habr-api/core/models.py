@@ -31,6 +31,11 @@ class Post(bh.Titleable, bh.Textable, cm.Common):
         verbose_name='Ссылка',
         unique=True
     )
+    date = models.CharField(
+        verbose_name='Дата',
+        max_length=100,
+        blank=True
+    )
     author = models.ForeignKey(
         'core.Author',
         verbose_name='Автор',

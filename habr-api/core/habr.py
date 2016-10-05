@@ -9,7 +9,7 @@ from core.models import Post, Author
 PAGE_URL = 'https://habrahabr.ru/page{}/'
 HABR_URL = 'https://habrahabr.ru'
 MIN_PAGE = 1
-MAX_PAGE = 20
+MAX_PAGE = 10
 
 SELECTOR_MAP = {
     # post
@@ -47,7 +47,7 @@ def is_parsed(url):
 
 
 def parse():
-    for item in range(10):
+    for item in range(MIN_PAGE, MAX_PAGE):
         page = requests.get(PAGE_URL.format(item))
         soup = BeautifulSoup(page.text, 'html.parser')
         links = [foo['href'] for foo in soup.find_all(**SELECTOR_MAP['url'])]
@@ -62,5 +62,4 @@ def parse():
                 author, created = Author.objects.get_or_create(
                     url=HABR_URL + author)
                 post = Post.objects.create(url=url, author=author,
-                                           title=title)
-                print(text)
+                                           title=title, date=date)
