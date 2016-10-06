@@ -15,7 +15,7 @@ urlpatterns = [
         name='author_detail'
     ),
     url(
-        regex=r'^idf/$',
+        regex=r'^posts/(?P<pk>[0-9]+)/$',
         view=idf,
         name='idf'
     )
