@@ -86,3 +86,4 @@ media/
 
 # node
 node_modules/
+db.sqlite3
