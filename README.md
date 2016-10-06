@@ -1,5 +1,7 @@
 # Habr API
 
+## Установка
+
 1. Клонируем проект: `git clone git@github.com:artinnok/habr-api.git habr-api_project`
 2. Переходим на уровень репозитория: `cd habr-api_project`
 3. Ставим виртуальное окружение: `virtualenv -p python3 env`
@@ -15,5 +17,9 @@ export DJANGO_SETTINGS_MODULE='config.settings.local'
 9. Проводим миграции: `python manage.py migrate --settings config.settings.local`
 10. Стартуем RabbitMQ: `rabbitmq-server`
 11. Делаем пункты 6-7, в отдельном окне терминала стартуем Celery: `celery worker -A config.celery -l info`
-12. Делаем пункты 6-7, в отдельном окне терминала стартуем сервер: `python manage.py runserver
---settings config.settings.local`
+12. Делаем пункты 6-7, в отдельном окне терминала стартуем сервер: `python manage.py runserver --settings config.settings.local`
+
+## API
+1. GET `/api/authors/` - список всех юзеров за сегодня
+2. GET `/api/authors/<x>` - список постов юзера с primary key x
+3. GET `/api/idf?word=hello` - получить tf_idf слова hello
