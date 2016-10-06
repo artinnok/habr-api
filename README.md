@@ -1,6 +1,6 @@
 # Habr API
 
-1. Клонируем проект: `git@github.com:artinnok/habr-api.git habr-api_project`
+1. Клонируем проект: `git clone git@github.com:artinnok/habr-api.git habr-api_project`
 2. Переходим на уровень репозитория: `cd habr-api_project`
 3. Ставим виртуальное окружение: `virtualenv -p python3 env`
 4. Генерируем [секретный ключ](http://www.miniwebtool.com/django-secret-key-generator/).
