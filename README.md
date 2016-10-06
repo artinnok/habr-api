@@ -22,4 +22,4 @@ export DJANGO_SETTINGS_MODULE='config.settings.local'
 ## API
 1. GET `/api/authors/` - список всех юзеров за сегодня
 2. GET `/api/authors/<x>` - список постов юзера с primary key x
-3. GET `/api/idf?word=hello` - получить tf_idf слова hello
+3. GET `/api/posts/<y>?word=hello` - получить tf_idf слова hello в посте с primary key y
