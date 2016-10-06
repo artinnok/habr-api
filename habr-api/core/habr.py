@@ -13,7 +13,7 @@ MAX_PAGE = 10
 
 SELECTOR_MAP = {
     # post
-    'url': {'name': 'a', 'class_': 'post__title_link'},
+    'link': {'name': 'a', 'class_': 'post__title_link'},
     'date': {'name': 'span', 'class_': 'post__time_published'},
     'title': {'name': 'span', 'class_': 'post__title-arrow'},
     'text': {'name': 'div', 'class_': 'content html_format'},
@@ -55,15 +55,15 @@ def is_today(date):
     return False
 
 
-def is_parsed(url):
-    return Post.objects.filter(url=url).exists()
+def is_parsed(link):
+    return Post.objects.filter(link=link).exists()
 
 
 def parse():
     for item in range(MIN_PAGE, MAX_PAGE):
         soup = get_soup(PAGE_URL.format(item))
 
-        links = [foo['href'] for foo in soup.find_all(**SELECTOR_MAP['url'])]
+        links = [foo['href'] for foo in soup.find_all(**SELECTOR_MAP['link'])]
         dates = [foo.text for foo in soup.find_all(**SELECTOR_MAP['date'])]
         for link, date in zip(links, dates):
             if not is_parsed(link) and is_today(date):
