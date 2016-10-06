@@ -14,9 +14,6 @@ export DJANGO_SETTINGS_MODULE='config.settings.local'
 8. Поставим зависимости: `pip install -r requirements/local.txt`
 9. Проводим миграции: `python manage.py migrate --settings config.settings.local`
 10. Стартуем RabbitMQ: `rabbitmq-server`
-11. Делаем пункты 6-7, в отдельном окне терминала стартуем Celery: `celery
-worker
- -A config
-.celery -l info`
+11. Делаем пункты 6-7, в отдельном окне терминала стартуем Celery: `celery worker -A config.celery -l info`
 12. Делаем пункты 6-7, в отдельном окне терминала стартуем сервер: `python manage.py runserver
 --settings config.settings.local`
